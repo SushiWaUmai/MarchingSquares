@@ -6,18 +6,12 @@ import processing.core.PVector
 import kotlin.random.Random
 import kotlin.math.roundToInt
 
-class Processing : PApplet() {
-    private var noiseScale = 5;
-    private var noiseOffset = PVector(0f, 0f);
-    private var gridSize = PVector(64f, 64f)
-    private var cellSize = PVector()
-    private var pointRadius = 3f
-    private var grid = FloatArray(gridSize.x.toInt() * gridSize.y.toInt()) { 
-        var x = it % gridSize.x
-        var y = it / gridSize.y
-
-        noise((x.toFloat() / gridSize.x + noiseOffset.x) * noiseScale, (y.toFloat() / gridSize.y + noiseOffset.y) * noiseScale)
-    }
+open class MarchingSquares: BetterPApplet() {
+    public var gridSize = PVector(64f, 64f)
+    public var cellSize = PVector()
+    public var pointRadius = 3f
+    public var grid = FloatArray(gridSize.x.toInt() * gridSize.y.toInt())
+    public var threshold = 0.5f
 
     override fun settings() {
         size(800, 800, PConstants.JAVA2D)
@@ -28,6 +22,8 @@ class Processing : PApplet() {
     }
 
     override fun draw() {
+        super.draw()
+
         background(0)
         updateNoise()
         drawGrid()
@@ -35,17 +31,9 @@ class Processing : PApplet() {
         drawLines()
     }
 
-    private fun updateNoise() {
-        noiseOffset.x += 0.001f
-
-        for (i in 0 until grid.size) {
-            var x = i % gridSize.x
-            var y = i / gridSize.y
-
-            grid[i] = noise((x.toFloat() / gridSize.x + noiseOffset.x) * noiseScale, (y.toFloat() / gridSize.y + noiseOffset.y) * noiseScale)
-        }
+    open fun updateNoise() {
     }
-
+    
     private fun drawGrid() {
         stroke(32)
 
@@ -158,10 +146,10 @@ class Processing : PApplet() {
     private fun drawConfigSmooth(x: Int, y: Int, idx: Int, p0: Float, p1: Float, p2: Float, p3: Float) {
         // all confiugrations for marching squares
         // https://en.wikipedia.org/wiki/Marching_squares#/media/File:Marching_squares_algorithm.svg
-        var s0 = (0.5f - p0) / (p1 - p0)
-        var s1 = (0.5f - p2) / (p1 - p2)
-        var s2 = (0.5f - p3) / (p2 - p3)
-        var s3 = (0.5f - p3) / (p0 - p3)
+        var s0 = (threshold - p0) / (p1 - p0)
+        var s1 = (threshold - p2) / (p1 - p2)
+        var s2 = (threshold - p3) / (p2 - p3)
+        var s3 = (threshold - p3) / (p0 - p3)
         when (idx) {
             0 -> {
                 // Nothing

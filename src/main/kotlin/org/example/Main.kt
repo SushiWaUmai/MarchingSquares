@@ -3,5 +3,6 @@ package org.example
 import processing.core.PApplet
 
 fun main() {
-    PApplet.main(Processing::class.java)
+    // PApplet.main(MarchingSquaresNoise::class.java)
+    PApplet.main(MarchingSquaresMetaballs::class.java)
 }
