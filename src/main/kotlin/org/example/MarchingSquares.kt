@@ -31,6 +31,12 @@ open class MarchingSquares: BetterPApplet() {
         drawLines()
     }
 
+    override fun keyPressed() {
+        if (key == 'r') {
+            recording = !recording
+        }
+    }
+
     open fun updateNoise() {
     }
     
