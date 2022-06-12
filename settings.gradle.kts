@@ -1,2 +1,2 @@
-rootProject.name = "ProcessingGradle"
+rootProject.name = "MarchingSquares"
 

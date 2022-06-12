@@ -23,11 +23,12 @@ repositories {
 
 tasks {
     withType<JavaCompile> {
-        options.release.set(17)
+        options.release.set(18)
         options.encoding = "UTF-8"
     }
 
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = "18"
     }
 }
+
