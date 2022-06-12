@@ -5,10 +5,10 @@ import processing.core.PVector
 class MarchingSquaresNoise: MarchingSquares() {
     private var noiseScale = 5f;
     private var noiseOffset = PVector(0f, 0f);
-    private var noiseSpeed = PVector(0.001f, 0.0f);
+    private var noiseSpeed = PVector(0.1f, 0.0f);
 
     override fun updateNoise() {
-        noiseOffset = noiseOffset.add(noiseSpeed);
+        noiseOffset = noiseOffset.add(noiseSpeed.copy().mult(deltaTime))
 
         for (i in 0 until grid.size) {
             var x = i % gridSize.x
